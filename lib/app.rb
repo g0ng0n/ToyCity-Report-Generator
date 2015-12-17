@@ -48,8 +48,11 @@ products_hash["items"].each do |toy|
   toy["purchases"].each do |purchase|
     sales = sales + purchase["price"];
     prices.push(purchase["price"]);
-    discount = toy["full-price"].to_f ;
-    discounts.push(discount -purchase["price"].to_f);
+    discount= ((purchase["price"].to_f/toy["full-price"].to_f))*100 ;
+    discountPerc = 100 - discount
+  
+
+    discounts.push(discountPerc);
   end
 
   # Calcalate and print the total amount of sales
@@ -59,9 +62,12 @@ products_hash["items"].each do |toy|
   puts "*Average Price $#{avg_price}" ;
 
   # Calculate and print the average discount based off the average sales price
-  avg_discount=discounts.inject(:+).to_f / avg_price;
-  avg_discount =avg_discount*100
-  puts "*Average Discounts %#{avg_discount.round(1)}" ;
+  avg_discount=discounts.inject(:+).to_f / discounts.size;
+  avg_discount =avg_discount
+
+
+
+  puts "*Average Discounts %#{avg_discount.round(2)}" ;
 
   puts "--------------------------------------"
 
@@ -99,7 +105,7 @@ end
 brandStructure = [];
 repeatedBrandNameArray=[];
 #ReInitialize the total_sales
-    totalSalesVolume = [];
+totalSalesVolume = [];
 
 
 brands.each do |brandName|
@@ -116,7 +122,7 @@ brands.each do |brandName|
       puts "--------------------------------------"
       # Print the name of the brand
       puts "*Toy's Brand Name #{brandStructure[0]["brand"]}";
-      sales=0;
+      sales=[];
       #I iterate over the new dataStructure of brands that was filtered before
       brandStructure.each do |brand|
         # Count the number of the brand's toys we stock
@@ -124,9 +130,10 @@ brands.each do |brandName|
         # Added the full price to the prices array in order to
         # get the average bellow
         prices.push(brand["full-price"].to_f);
-        sales = sales + brand["purchases"].size
+        #Calculate the total sales for this brand
+        brand["purchases"].each{ |p| totalSalesVolume.push(p["price"]) }
       end
-      totalSalesVolume.push(sales);
+      
       # Print the number of the brand's toys we stock
       puts "*Toy's Brand Stock #{actualStock}";
       
@@ -143,4 +150,4 @@ brands.each do |brandName|
 end
 # Calculate and print the total sales volume of all the brand's toys combined
 puts "--------------------------------------"
-puts "*The total sales volume of all the brand's toys combined are: #{totalSalesVolume.inject(:+)}" ;
+puts "*The total sales volume of all the brand's toys combined are: $ #{totalSalesVolume.inject(:+).round(2)}" ;
