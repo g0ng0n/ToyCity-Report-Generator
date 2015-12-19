@@ -6,9 +6,9 @@ products_hash = JSON.parse(file)
 # Print today's date
 t = Time.now()
 t.strftime("The date is %m/%d/%y")
-puts "--------------------------------------"
+puts '-' * 20
 puts "Today's date #{t}";
-puts "--------------------------------------"
+puts '-' * 20
 
 puts "                     _            _       "
 puts "                    | |          | |      "
@@ -29,14 +29,14 @@ puts "|_|                                       "
   # Calculate and print the average discount based off the average sales price
 
 # For each product in the data set:
-puts "--------------------------------------"
+puts '-' * 20
 total_sales =0;
 products_hash["items"].each do |toy|
   prices = [];
   discounts = [];
   sales = 0;
   # Print the name of the toy
-  puts "--------------------------------------"
+  puts '-' * 20
   puts "*Toy's name #{toy["title"]}";
   # Print the retail price of the toy
   puts "*Retail price of toy: $#{toy["full-price"]}";
@@ -69,13 +69,13 @@ products_hash["items"].each do |toy|
 
   puts "*Average Discounts %#{avg_discount.round(2)}" ;
 
-  puts "--------------------------------------"
+  puts '-' * 20
 
 end
   # Calcalate and print the total amount of sales
-  puts "--------------------------------------"
+  puts '-' * 20
   puts "Total Products Sales: #{total_sales}";
-  puts "--------------------------------------"
+  puts '-' * 20
 
 
 	puts " _                         _     "
@@ -105,11 +105,12 @@ end
 brandStructure = [];
 repeatedBrandNameArray=[];
 #ReInitialize the total_sales
-totalSalesVolume = [];
 
 
 brands.each do |brandName|
     prices = [];
+    totalSalesVolume = [];
+
     #checked if we repeated a brandName by see if the brandName String
     # Inside the repeatedBrandNameArray
     if !(repeatedBrandNameArray.include? brandName)
@@ -119,7 +120,7 @@ brands.each do |brandName|
       
       #Setup an stock counter in order to count the stock for the brands
       actualStock=0;
-      puts "--------------------------------------"
+      puts '-' * 20
       # Print the name of the brand
       puts "*Toy's Brand Name #{brandStructure[0]["brand"]}";
       sales=[];
@@ -140,8 +141,10 @@ brands.each do |brandName|
       # Calculate and print the average price the toy sold for
       avg_price=prices.inject(:+) /  prices.size;
       puts "*Average Price for the Brand #{brandStructure[0]["brand"]} - $#{avg_price.round(3)}" ;
+      puts '-' * 20
 
-      
+      puts "*The total sales volume of all toys for the brand #{brandStructure[0]["brand"]} is: $ #{totalSalesVolume.inject(:+).round(2)}" ;
+
     end
     repeatedBrandNameArray.push(brandName)
     
@@ -149,5 +152,4 @@ brands.each do |brandName|
 
 end
 # Calculate and print the total sales volume of all the brand's toys combined
-puts "--------------------------------------"
-puts "*The total sales volume of all the brand's toys combined are: $ #{totalSalesVolume.inject(:+).round(2)}" ;
+
